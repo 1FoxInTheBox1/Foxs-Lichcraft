@@ -15,10 +15,11 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
 
-    public static final Block SOUL_MASHER = register(AbstractBlock.Settings.create(), "soul_masher", true);
+//    public static final Block SOUL_MASHER = register(AbstractBlock.Settings.create(), "soul_masher", true);
+    public static final Block SOUL_MASHER = register(new SoulMasher(AbstractBlock.Settings.create()), SoulMasher.ID, true);
 
     public static Block register(Block.Settings blockSettings, String id, boolean shouldRegisterItem) {
-        Identifier blockID = Identifier.of(FoxsLichcraft.MOD_ID, id);
+        Identifier blockID = getID(id);
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, blockID);
         Block.Settings settings = blockSettings.registryKey(blockKey);
         Block newBlock = new Block(settings);
@@ -31,6 +32,21 @@ public class ModBlocks {
         }
 
         return Registry.register(Registries.BLOCK, blockID, newBlock);
+    }
+
+    public static Block register(Block block, Identifier blockID, boolean shouldRegisterItem) {
+        if (shouldRegisterItem) {
+            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, blockID);
+            Registry.register(Registries.ITEM,
+                    blockID,
+                    new BlockItem(block, new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey()));
+        }
+
+        return Registry.register(Registries.BLOCK, blockID, block);
+    }
+
+    public static Identifier getID(String id) {
+        return Identifier.of(FoxsLichcraft.MOD_ID, id);
     }
 
 
