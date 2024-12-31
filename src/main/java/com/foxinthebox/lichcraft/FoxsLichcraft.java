@@ -1,5 +1,6 @@
 package com.foxinthebox.lichcraft;
 
+import com.foxinthebox.lichcraft.block.ModBlocks;
 import com.foxinthebox.lichcraft.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -14,5 +15,6 @@ public class FoxsLichcraft implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.initialize();
+		ModBlocks.initialize();
 	}
 }

@@ -20,7 +20,7 @@ public class ModItems {
     // Item Group
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(FoxsLichcraft.MOD_ID, "item_group"));
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ModItems.SOUL_GOO))
+            .icon(() -> new ItemStack(SOUL_GOO))
             .displayName(Text.translatable("itemGroup.lichcraft"))
             .build();
 
@@ -36,7 +36,7 @@ public class ModItems {
         Registry.register(Registries.ITEM_GROUP, ITEM_GROUP_KEY, ITEM_GROUP);
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY).register(itemGroup -> {
-            itemGroup.add(ModItems.SOUL_GOO);
+            itemGroup.add(SOUL_GOO);
         });
     }
 }
