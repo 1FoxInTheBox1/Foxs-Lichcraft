@@ -1,7 +1,7 @@
-package com.foxinthebox.lichcraft.block;
+package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.FoxsLichcraft;
-import com.foxinthebox.lichcraft.item.ModItems;
+import com.foxinthebox.lichcraft.block.SoulMasher;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -19,7 +19,7 @@ public class ModBlocks {
     public static final Block SOUL_MASHER = register(new SoulMasher(AbstractBlock.Settings.create()), SoulMasher.ID, true);
 
     public static Block register(Block.Settings blockSettings, String id, boolean shouldRegisterItem) {
-        Identifier blockID = getID(id);
+        Identifier blockID = FoxsLichcraft.getID(id);
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, blockID);
         Block.Settings settings = blockSettings.registryKey(blockKey);
         Block newBlock = new Block(settings);
@@ -44,11 +44,6 @@ public class ModBlocks {
 
         return Registry.register(Registries.BLOCK, blockID, block);
     }
-
-    public static Identifier getID(String id) {
-        return Identifier.of(FoxsLichcraft.MOD_ID, id);
-    }
-
 
     public static void initialize() {
         ItemGroupEvents.modifyEntriesEvent(ModItems.ITEM_GROUP_KEY).register((itemGroup) -> {

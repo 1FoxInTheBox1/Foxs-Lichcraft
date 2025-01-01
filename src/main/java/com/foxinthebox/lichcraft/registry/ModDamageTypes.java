@@ -1,0 +1,32 @@
+package com.foxinthebox.lichcraft.registry;
+
+import com.foxinthebox.lichcraft.FoxsLichcraft;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+public class ModDamageTypes {
+    public static final RegistryKey<DamageType> SOUL_MASH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("soul_mash"));
+
+    public static DamageSource create(World world, RegistryKey<DamageType> damageType) {
+        return create(world, damageType, null, null);
+    }
+
+    public static DamageSource create(World world, RegistryKey<DamageType> damageType, @Nullable Entity source) {
+        return create(world, damageType, null, source);
+    }
+
+    public static DamageSource create(World world, RegistryKey<DamageType> damageType, @Nullable Entity projectile, @Nullable Entity source) {
+        return new DamageSource(world.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getOrThrow(damageType), projectile, source);
+    }
+
+    public static void initialize() {}
+}

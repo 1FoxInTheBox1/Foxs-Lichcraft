@@ -1,4 +1,4 @@
-package com.foxinthebox.lichcraft.item;
+package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.FoxsLichcraft;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
