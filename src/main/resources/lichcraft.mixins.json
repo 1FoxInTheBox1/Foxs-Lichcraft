@@ -3,7 +3,9 @@
 	"package": "com.foxinthebox.lichcraft.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-      "LivingEntityMixin"
+		"LivingEntityMixin",
+		"PlayerEntityMixin",
+		"ServerPlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
