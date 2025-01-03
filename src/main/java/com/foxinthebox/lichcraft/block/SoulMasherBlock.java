@@ -1,7 +1,6 @@
 package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.FoxsLichcraft;
-import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModDamageTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
@@ -17,13 +16,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 
-public class SoulMasher extends FallingBlock {
+public class SoulMasherBlock extends FallingBlock {
     public static final Identifier ID = FoxsLichcraft.getID("soul_masher");
-    public static final MapCodec<SoulMasher> CODEC = createCodec(SoulMasher::new);
+    public static final MapCodec<SoulMasherBlock> CODEC = createCodec(SoulMasherBlock::new);
     private static final float FALL_HURT_AMOUNT = 3.0F;
     private static final int FALL_HURT_MAX_DAMAGE = 30;
 
-    public SoulMasher(Settings settings) {
+    public SoulMasherBlock(Settings settings) {
         super(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, ID))
                 .sounds(BlockSoundGroup.ANVIL));
     }
@@ -40,7 +39,7 @@ public class SoulMasher extends FallingBlock {
 
     @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return ModDamageTypes.create(attacker.getWorld(), ModDamageTypes.SOUL_MASH, attacker);
+        return ModDamageTypes.create(attacker.getWorld(), ModDamageTypes.LOW_SOUL_REND, attacker);
     }
 
     @Override

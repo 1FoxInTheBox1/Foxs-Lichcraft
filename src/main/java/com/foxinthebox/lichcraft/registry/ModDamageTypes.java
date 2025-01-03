@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class ModDamageTypes {
-    public static final RegistryKey<DamageType> SOUL_MASH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("soul_mash"));
+    public static final RegistryKey<DamageType> LOW_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("low_soul_rend"));
+    public static final RegistryKey<DamageType> HIGH_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("high_soul_rend"));
 
     public static DamageSource create(World world, RegistryKey<DamageType> damageType) {
         return create(world, damageType, null, null);

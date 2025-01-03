@@ -1,11 +1,12 @@
 package com.foxinthebox.lichcraft.mixin;
 
-import com.foxinthebox.lichcraft.block.Phylactery;
+import com.foxinthebox.lichcraft.block.PhylacteryBlock;
+import com.foxinthebox.lichcraft.block.PhylacteryBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RespawnAnchorBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
@@ -18,7 +19,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
@@ -31,14 +31,19 @@ public class PlayerEntityMixin {
             ServerWorld respawnWorld = ((ServerPlayerEntity) (Object) this).server.getWorld(((ServerPlayerEntity) (Object) this).getSpawnPointDimension());
             BlockState blockState = respawnWorld.getBlockState(respawnPos);
             Block block = blockState.getBlock();
+            BlockEntity blockEntity = world.getBlockEntity(respawnPos);
 
-            if (block instanceof Phylactery) {
-                Optional<Vec3d> optional = RespawnAnchorBlock.findRespawnPosition(EntityType.PLAYER, respawnWorld, respawnPos);
-                if (optional.isPresent()) {
-                    ((PlayerEntity) (Object) this).setHealth(5.0f);
-                    ((PlayerEntity) (Object) this).setVelocity(Vec3d.ZERO);
-                    TeleportTarget teleportTarget = new TeleportTarget(respawnWorld, optional.get(), Vec3d.ZERO, ((ServerPlayerEntity) (Object) this).getYaw(), 0.0F, TeleportTarget.ADD_PORTAL_CHUNK_TICKET);
-                    ((PlayerEntity) (Object) this).teleportTo(teleportTarget);
+            if (block instanceof PhylacteryBlock && blockEntity instanceof PhylacteryBlockEntity phylacteryBlockEntity) {
+                if (phylacteryBlockEntity.getSouls() >= 1000) {
+                    Optional<Vec3d> optional = RespawnAnchorBlock.findRespawnPosition(EntityType.PLAYER, respawnWorld, respawnPos);
+                    if (optional.isPresent()) {
+                        ((PlayerEntity) (Object) this).setHealth(5.0f);
+                        ((PlayerEntity) (Object) this).setVelocity(Vec3d.ZERO);
+                        TeleportTarget teleportTarget = new TeleportTarget(respawnWorld, optional.get(), Vec3d.ZERO, ((ServerPlayerEntity) (Object) this).getYaw(), 0.0F, TeleportTarget.ADD_PORTAL_CHUNK_TICKET);
+                        ((PlayerEntity) (Object) this).teleportTo(teleportTarget);
+                    }
+                    phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - 1000);
+                    phylacteryBlockEntity.markDirty();
                 }
             }
         }

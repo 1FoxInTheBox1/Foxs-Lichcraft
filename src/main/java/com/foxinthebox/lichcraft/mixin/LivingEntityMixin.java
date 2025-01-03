@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	private void onDeath(DamageSource damageSource, CallbackInfo ci) {
-		if (damageSource.isOf(ModDamageTypes.SOUL_MASH)) {
+		if (damageSource.isOf(ModDamageTypes.LOW_SOUL_REND)) {
 			ItemStack stack = new ItemStack(ModItems.SOUL_GOO);
 			ItemEntity itemEntity = new ItemEntity(((LivingEntity) (Object) this).getWorld(),
 					((LivingEntity) (Object) this).getX(),

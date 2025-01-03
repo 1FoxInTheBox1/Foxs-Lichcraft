@@ -1,21 +1,45 @@
 package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.FoxsLichcraft;
+import com.foxinthebox.lichcraft.block.SoulMasherBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.block.AbstractFireBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Saddleable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.event.GameEvent;
+
+import java.util.List;
 
 public class ModItems {
     // Items
     public static final Item SOUL_GOO = register(new Item.Settings(), "soul_goo");
+    public static final Item CRYSTALLIZED_SOUL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "soul_crystal");
+    public static final Item ECHOING_GOO = register(new Item.Settings().rarity(Rarity.UNCOMMON), "echoing_goo");
+    public static final Item SOUL_STAR = register(new Item.Settings().rarity(Rarity.RARE), "soul_star");
+    public static final Item RESONANT_SLAG = register(new Item.Settings().rarity(Rarity.EPIC), "resonant_slag");
+    public static final Item DREAD_STEEL = register(new Item.Settings(), "dread_steel");
 
     // Item Group
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(FoxsLichcraft.MOD_ID, "item_group"));
@@ -37,6 +61,31 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY).register(itemGroup -> {
             itemGroup.add(SOUL_GOO);
+            itemGroup.add(CRYSTALLIZED_SOUL);
+            itemGroup.add(ECHOING_GOO);
+            itemGroup.add(SOUL_STAR);
+            itemGroup.add(RESONANT_SLAG);
+            itemGroup.add(DREAD_STEEL);
         });
+
+        DispenserBlock.registerBehavior(ModBlocks.SOUL_MASHER_BLOCK.asItem(),
+                new FallibleItemDispenserBehavior() {
+                    @Override
+                    public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+                        ServerWorld serverWorld = pointer.world();
+                        BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
+                        if (serverWorld.isAir(blockPos)) {
+                            serverWorld.setBlockState(blockPos, ModBlocks.SOUL_MASHER_BLOCK.getDefaultState());
+                            serverWorld.emitGameEvent(null, GameEvent.BLOCK_PLACE, blockPos);
+                        }
+
+                        if (this.isSuccess()) {
+                            stack.decrement(1);
+                        }
+
+                        return stack;
+                    }
+                }
+        );
     }
 }

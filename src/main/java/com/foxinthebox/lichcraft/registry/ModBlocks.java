@@ -1,11 +1,15 @@
 package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.FoxsLichcraft;
-import com.foxinthebox.lichcraft.block.Phylactery;
-import com.foxinthebox.lichcraft.block.SoulMasher;
+import com.foxinthebox.lichcraft.block.PhylacteryBlock;
+import com.foxinthebox.lichcraft.block.PhylacteryBlockEntity;
+import com.foxinthebox.lichcraft.block.SoulMasherBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityType;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -17,10 +21,13 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     // Blocks
-    public static final Block SOUL_MASHER = register(new SoulMasher(AbstractBlock.Settings.create()), SoulMasher.ID, true);
-    public static final Block PHYLACTERY = register(new Phylactery(AbstractBlock.Settings.create()), Phylactery.ID, true);
+    public static final Block SOUL_MASHER_BLOCK = registerBlock(new SoulMasherBlock(AbstractBlock.Settings.create()), SoulMasherBlock.ID, true);
+    public static final Block PHYLACTERY_BLOCK = registerBlock(new PhylacteryBlock(AbstractBlock.Settings.create()), PhylacteryBlock.ID, true);
 
-    public static Block register(Block.Settings blockSettings, String id, boolean shouldRegisterItem) {
+    // Block Entities
+    public static final BlockEntityType<PhylacteryBlockEntity> PHYLACTERY_BLOCK_ENTITY = registerBlockEntity("phylactery", FabricBlockEntityTypeBuilder.create(PhylacteryBlockEntity::new, PHYLACTERY_BLOCK).build());
+
+    public static Block registerBlock(Block.Settings blockSettings, String id, boolean shouldRegisterItem) {
         Identifier blockID = FoxsLichcraft.getID(id);
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, blockID);
         Block.Settings settings = blockSettings.registryKey(blockKey);
@@ -36,7 +43,7 @@ public class ModBlocks {
         return Registry.register(Registries.BLOCK, blockID, newBlock);
     }
 
-    public static Block register(Block block, Identifier blockID, boolean shouldRegisterItem) {
+    public static Block registerBlock(Block block, Identifier blockID, boolean shouldRegisterItem) {
         if (shouldRegisterItem) {
             RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, blockID);
             Registry.register(Registries.ITEM,
@@ -47,10 +54,14 @@ public class ModBlocks {
         return Registry.register(Registries.BLOCK, blockID, block);
     }
 
+    public static <T extends BlockEntityType<?>> T registerBlockEntity(String path, T blockEntityType) {
+        return Registry.register(Registries.BLOCK_ENTITY_TYPE, FoxsLichcraft.getID(path), blockEntityType);
+    }
+
     public static void initialize() {
         ItemGroupEvents.modifyEntriesEvent(ModItems.ITEM_GROUP_KEY).register((itemGroup) -> {
-            itemGroup.add(ModBlocks.SOUL_MASHER.asItem());
-            itemGroup.add(ModBlocks.PHYLACTERY.asItem());
+            itemGroup.add(ModBlocks.SOUL_MASHER_BLOCK.asItem());
+            itemGroup.add(ModBlocks.PHYLACTERY_BLOCK.asItem());
         });
     }
 }
