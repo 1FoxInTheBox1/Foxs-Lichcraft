@@ -1,11 +1,10 @@
 package com.foxinthebox.lichcraft.block;
 
-import com.foxinthebox.lichcraft.FoxsLichcraft;
+import com.foxinthebox.lichcraft.Lichcraft;
 import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModItems;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -31,7 +30,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PhylacteryBlock extends BlockWithEntity {
-    public static final Identifier ID = FoxsLichcraft.getID("phylactery");
+    public static final Identifier ID = Lichcraft.getID("phylactery");
     public static final MapCodec<PhylacteryBlock> CODEC = createCodec(PhylacteryBlock::new);
     private static final ImmutableList<Vec3i> VALID_HORIZONTAL_SPAWN_OFFSETS = ImmutableList.of(
             new Vec3i(0, 0, -1),
@@ -73,7 +72,7 @@ public class PhylacteryBlock extends BlockWithEntity {
         setPlayerSpawn((ServerPlayerEntity)player, world, pos);
 
         if (!stack.isEmpty()) {
-            if (stack.isOf(ModItems.SOUL_GOO)) {
+            if (stack.isIn(ModItems.PHYLACTERY_FUEL)) {
                 if (blockEntity.isEmpty()) {
                     blockEntity.setStack(0, player.getStackInHand(hand).copy());
                     stack.setCount(0);
@@ -82,7 +81,7 @@ public class PhylacteryBlock extends BlockWithEntity {
                     int inBlock = blockEntity.getStack(0).getCount();
                     ItemStack newStack = stack.copy();
                     stack.setCount(stack.getCount() - (stack.getMaxCount() - inBlock));
-                    newStack.setCount(64);
+                    newStack.setCount(Math.min(inBlock + stack.getCount(), 64));
                     blockEntity.setStack(0, newStack);
                     world.playSound(null, pos, SoundEvents.BLOCK_SCULK_CATALYST_PLACE, SoundCategory.BLOCKS);
                 }

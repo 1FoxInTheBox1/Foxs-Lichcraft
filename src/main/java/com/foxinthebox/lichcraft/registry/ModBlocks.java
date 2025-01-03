@@ -1,11 +1,10 @@
 package com.foxinthebox.lichcraft.registry;
 
-import com.foxinthebox.lichcraft.FoxsLichcraft;
+import com.foxinthebox.lichcraft.Lichcraft;
 import com.foxinthebox.lichcraft.block.PhylacteryBlock;
 import com.foxinthebox.lichcraft.block.PhylacteryBlockEntity;
 import com.foxinthebox.lichcraft.block.SoulMasherBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityType;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -28,7 +27,7 @@ public class ModBlocks {
     public static final BlockEntityType<PhylacteryBlockEntity> PHYLACTERY_BLOCK_ENTITY = registerBlockEntity("phylactery", FabricBlockEntityTypeBuilder.create(PhylacteryBlockEntity::new, PHYLACTERY_BLOCK).build());
 
     public static Block registerBlock(Block.Settings blockSettings, String id, boolean shouldRegisterItem) {
-        Identifier blockID = FoxsLichcraft.getID(id);
+        Identifier blockID = Lichcraft.getID(id);
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, blockID);
         Block.Settings settings = blockSettings.registryKey(blockKey);
         Block newBlock = new Block(settings);
@@ -55,7 +54,7 @@ public class ModBlocks {
     }
 
     public static <T extends BlockEntityType<?>> T registerBlockEntity(String path, T blockEntityType) {
-        return Registry.register(Registries.BLOCK_ENTITY_TYPE, FoxsLichcraft.getID(path), blockEntityType);
+        return Registry.register(Registries.BLOCK_ENTITY_TYPE, Lichcraft.getID(path), blockEntityType);
     }
 
     public static void initialize() {

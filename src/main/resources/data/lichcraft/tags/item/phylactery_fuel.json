@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "lichcraft:soul_goo",
+    "lichcraft:crystallized_soul",
+    "lichcraft:echoing_goo",
+    "minecraft:nether_star",
+    "lichcraft:soul_star"
+  ]
+}

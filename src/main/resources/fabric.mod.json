@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.foxinthebox.lichcraft.FoxsLichcraft"
+          "com.foxinthebox.lichcraft.Lichcraft"
 		],
 		"fabric-datagen": [
-			"com.foxinthebox.lichcraft.FoxsLichcraftDataGenerator"
+			"com.foxinthebox.lichcraft.LichcraftDataGenerator"
 		],
 		"client": [
-			"com.foxinthebox.lichcraft.FoxsLichcraftClient"
+			"com.foxinthebox.lichcraft.LichcraftClient"
 		]
 	},
 	"mixins": [

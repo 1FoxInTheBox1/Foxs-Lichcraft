@@ -40,9 +40,16 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
     public static void tick(World world, BlockPos pos, BlockState state, PhylacteryBlockEntity blockEntity) {
         if (!blockEntity.isEmpty()) {
             ItemStack stack = blockEntity.getStack(0);
-            stack.setCount(stack.getCount() - 1);
-            blockEntity.setSouls(blockEntity.getSouls() + 1);
-            blockEntity.markDirty();
+            if (stack.isIn(ModItems.PHYLACTERY_FUEL)) {
+                stack.setCount(stack.getCount() - 1);
+
+                int soulValue = stack.isIn(ModItems.LOW_POWER_SOUL) ? 1 : 0;
+                soulValue = stack.isIn(ModItems.MID_POWER_SOUL) ? 2 : soulValue;
+                soulValue = stack.isIn(ModItems.HIGH_POWER_SOUL) ? 100 : soulValue;
+                blockEntity.setSouls(blockEntity.getSouls() + soulValue);
+
+                blockEntity.markDirty();
+            }
         }
     }
 
@@ -94,7 +101,7 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public boolean isValid(int slot, ItemStack stack) {
-        return stack.isOf(ModItems.SOUL_GOO);
+        return stack.isIn(ModItems.PHYLACTERY_FUEL);
     }
 
     @Override

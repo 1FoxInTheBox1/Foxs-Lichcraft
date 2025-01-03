@@ -1,55 +1,50 @@
 package com.foxinthebox.lichcraft.registry;
 
-import com.foxinthebox.lichcraft.FoxsLichcraft;
-import com.foxinthebox.lichcraft.block.SoulMasherBlock;
+import com.foxinthebox.lichcraft.Lichcraft;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Saddleable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.event.GameEvent;
-
-import java.util.List;
 
 public class ModItems {
     // Items
     public static final Item SOUL_GOO = register(new Item.Settings(), "soul_goo");
-    public static final Item CRYSTALLIZED_SOUL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "soul_crystal");
+    public static final Item SOUL_CRYSTAL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "soul_crystal");
     public static final Item ECHOING_GOO = register(new Item.Settings().rarity(Rarity.UNCOMMON), "echoing_goo");
     public static final Item SOUL_STAR = register(new Item.Settings().rarity(Rarity.RARE), "soul_star");
     public static final Item RESONANT_SLAG = register(new Item.Settings().rarity(Rarity.EPIC), "resonant_slag");
     public static final Item DREAD_STEEL = register(new Item.Settings(), "dread_steel");
 
+    // Item Tags
+    public static final TagKey<Item> HIGH_POWER_SOUL = createTag("high_power_soul");
+    public static final TagKey<Item> MID_POWER_SOUL = createTag("mid_power_soul");
+    public static final TagKey<Item> LOW_POWER_SOUL = createTag("low_power_soul");
+    public static final TagKey<Item> PHYLACTERY_FUEL = createTag("phylactery_fuel");
+
     // Item Group
-    public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(FoxsLichcraft.MOD_ID, "item_group"));
+    public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(Lichcraft.MOD_ID, "item_group"));
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(SOUL_GOO))
             .displayName(Text.translatable("itemGroup.lichcraft"))
             .build();
 
     public static Item register(Item.Settings itemSettings, String id) {
-        Identifier itemID = Identifier.of(FoxsLichcraft.MOD_ID, id);
+        Identifier itemID = Identifier.of(Lichcraft.MOD_ID, id);
         RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, itemID);
         Item.Settings settings = itemSettings.registryKey(key);
 
@@ -61,7 +56,7 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY).register(itemGroup -> {
             itemGroup.add(SOUL_GOO);
-            itemGroup.add(CRYSTALLIZED_SOUL);
+            itemGroup.add(SOUL_CRYSTAL);
             itemGroup.add(ECHOING_GOO);
             itemGroup.add(SOUL_STAR);
             itemGroup.add(RESONANT_SLAG);
@@ -87,5 +82,9 @@ public class ModItems {
                     }
                 }
         );
+    }
+
+    public static TagKey<Item> createTag(String name) {
+        return TagKey.of(RegistryKeys.ITEM, Lichcraft.getID(name));
     }
 }

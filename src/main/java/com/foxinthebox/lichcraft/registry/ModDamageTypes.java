@@ -1,21 +1,17 @@
 package com.foxinthebox.lichcraft.registry;
 
-import com.foxinthebox.lichcraft.FoxsLichcraft;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import com.foxinthebox.lichcraft.Lichcraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class ModDamageTypes {
-    public static final RegistryKey<DamageType> LOW_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("low_soul_rend"));
-    public static final RegistryKey<DamageType> HIGH_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, FoxsLichcraft.getID("high_soul_rend"));
+    public static final RegistryKey<DamageType> LOW_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Lichcraft.getID("low_soul_rend"));
+    public static final RegistryKey<DamageType> HIGH_SOUL_REND = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Lichcraft.getID("high_soul_rend"));
 
     public static DamageSource create(World world, RegistryKey<DamageType> damageType) {
         return create(world, damageType, null, null);

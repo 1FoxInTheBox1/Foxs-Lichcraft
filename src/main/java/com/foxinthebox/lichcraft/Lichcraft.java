@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FoxsLichcraft implements ModInitializer {
+public class Lichcraft implements ModInitializer {
 	public static final String MOD_ID = "lichcraft";
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -22,6 +22,6 @@ public class FoxsLichcraft implements ModInitializer {
 	}
 
 	public static Identifier getID(String id) {
-		return Identifier.of(FoxsLichcraft.MOD_ID, id);
+		return Identifier.of(Lichcraft.MOD_ID, id);
 	}
 }
