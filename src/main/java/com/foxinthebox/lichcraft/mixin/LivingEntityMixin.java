@@ -1,6 +1,5 @@
 package com.foxinthebox.lichcraft.mixin;
 
-import com.foxinthebox.lichcraft.registry.ModDamageTypes;
 import com.foxinthebox.lichcraft.registry.ModLootTables;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.entity.Entity;
@@ -29,7 +28,7 @@ public abstract class LivingEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	private void onDeath(DamageSource damageSource, CallbackInfo ci) {
-		if (damageSource.isOf(ModDamageTypes.LOW_SOUL_REAP) || damageSource.isOf(ModDamageTypes.HIGH_SOUL_REAP)) {
+		if (damageSource.isOf(ModTags.LOW_SOUL_REAP) || damageSource.isOf(ModTags.HIGH_SOUL_REAP)) {
 			dropSouls((ServerWorld) ((LivingEntity) (Object) this).getWorld(), damageSource);
 		}
 	}
@@ -55,7 +54,7 @@ public abstract class LivingEntityMixin {
 	// TODO: This sucks. Fix this.
 	@Unique
 	protected Optional<RegistryKey<LootTable>> getSoulLootTable(DamageSource damageSource) {
-		if (damageSource.isOf(ModDamageTypes.LOW_SOUL_REAP)) {
+		if (damageSource.isOf(ModTags.LOW_SOUL_REAP)) {
 			if (((Entity) (Object) this).getType().isIn(ModTags.EXTREME_SOUL_YIELD)) {
 				return Optional.of(ModLootTables.HIGH_YIELD_LOW_REAP);
 			}
@@ -69,7 +68,7 @@ public abstract class LivingEntityMixin {
 				return Optional.of(ModLootTables.LOW_YIELD_LOW_REAP);
 			}
 		}
-		if (damageSource.isOf(ModDamageTypes.HIGH_SOUL_REAP)) {
+		if (damageSource.isOf(ModTags.HIGH_SOUL_REAP)) {
 			if (((Entity) (Object) this).getType().isIn(ModTags.EXTREME_SOUL_YIELD)) {
 				return Optional.of(ModLootTables.HIGH_YIELD_HIGH_REAP);
 			}

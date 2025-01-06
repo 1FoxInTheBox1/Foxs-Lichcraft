@@ -28,22 +28,25 @@ public class PlayerEntityMixin {
     protected void onDamage(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
         if (((PlayerEntity) (Object) this).getHealth() <= 0 && !source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             BlockPos respawnPos = ((ServerPlayerEntity) (Object) this).getSpawnPointPosition();
-            ServerWorld respawnWorld = ((ServerPlayerEntity) (Object) this).server.getWorld(((ServerPlayerEntity) (Object) this).getSpawnPointDimension());
-            BlockState blockState = respawnWorld.getBlockState(respawnPos);
-            Block block = blockState.getBlock();
-            BlockEntity blockEntity = world.getBlockEntity(respawnPos);
+            if (respawnPos != null) {
+                ServerWorld respawnWorld = ((ServerPlayerEntity) (Object) this).server.getWorld(((ServerPlayerEntity) (Object) this).getSpawnPointDimension());
+                BlockState blockState = respawnWorld.getBlockState(respawnPos);
+                Block block = blockState.getBlock();
+                BlockEntity blockEntity = world.getBlockEntity(respawnPos);
 
-            if (block instanceof PhylacteryBlock && blockEntity instanceof PhylacteryBlockEntity phylacteryBlockEntity) {
-                if (phylacteryBlockEntity.getSouls() >= 1000) {
-                    Optional<Vec3d> optional = RespawnAnchorBlock.findRespawnPosition(EntityType.PLAYER, respawnWorld, respawnPos);
-                    if (optional.isPresent()) {
-                        ((PlayerEntity) (Object) this).setHealth(5.0f);
-                        ((PlayerEntity) (Object) this).setVelocity(Vec3d.ZERO);
-                        TeleportTarget teleportTarget = new TeleportTarget(respawnWorld, optional.get(), Vec3d.ZERO, ((ServerPlayerEntity) (Object) this).getYaw(), 0.0F, TeleportTarget.ADD_PORTAL_CHUNK_TICKET);
-                        ((PlayerEntity) (Object) this).teleportTo(teleportTarget);
+                if (block instanceof PhylacteryBlock && blockEntity instanceof PhylacteryBlockEntity phylacteryBlockEntity) {
+                    if (phylacteryBlockEntity.getSouls() >= 1000) {
+                        Optional<Vec3d> optional = RespawnAnchorBlock.findRespawnPosition(EntityType.PLAYER, respawnWorld, respawnPos);
+                        if (optional.isPresent()) {
+                            ((PlayerEntity) (Object) this).setHealth(5.0f);
+                            ((PlayerEntity) (Object) this).setVelocity(Vec3d.ZERO);
+                            TeleportTarget teleportTarget = new TeleportTarget(respawnWorld, optional.get(), Vec3d.ZERO, ((ServerPlayerEntity) (Object) this).getYaw(), 0.0F, TeleportTarget.ADD_PORTAL_CHUNK_TICKET);
+                            ((PlayerEntity) (Object) this).teleportTo(teleportTarget);
+                        }
+                        phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - 1000);
+                        phylacteryBlockEntity.markDirty();
+                        return;
                     }
-                    phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - 1000);
-                    phylacteryBlockEntity.markDirty();
                 }
             }
         }

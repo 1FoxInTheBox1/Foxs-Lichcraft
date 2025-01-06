@@ -1,10 +1,16 @@
 package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.Lichcraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class ModTags {
     // Item Tags
@@ -19,6 +25,10 @@ public class ModTags {
     public static final TagKey<EntityType<?>> HIGH_SOUL_YIELD = createEntityTypeTag("high_soul_yield");
     public static final TagKey<EntityType<?>> EXTREME_SOUL_YIELD = createEntityTypeTag("extreme_soul_yield");
 
+    // Damage Type Tags
+    public static final RegistryKey<DamageType> LOW_SOUL_REAP = createDamageType("low_soul_reap");
+    public static final RegistryKey<DamageType> HIGH_SOUL_REAP = createDamageType("high_soul_reap");
+
     public static TagKey<Item> createItemTag(String name) {
         return TagKey.of(RegistryKeys.ITEM, Lichcraft.getID(name));
     }
@@ -27,4 +37,23 @@ public class ModTags {
         return TagKey.of(RegistryKeys.ENTITY_TYPE, Lichcraft.getID(name));
     }
 
+    public static RegistryKey<DamageType> createDamageType(String name) {
+        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Lichcraft.getID(name));
+    }
+
+    public static DamageSource createDamageSource(World world, RegistryKey<DamageType> damageType) {
+        return createDamageSource(world, damageType, null, null);
+    }
+
+    public static DamageSource createDamageSource(World world, RegistryKey<DamageType> damageType, @Nullable Entity source) {
+        return createDamageSource(world, damageType, null, source);
+    }
+
+    public static DamageSource createDamageSource(World world, RegistryKey<DamageType> damageType, @Nullable Entity projectile, @Nullable Entity source) {
+        return new DamageSource(world.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getOrThrow(damageType), projectile, source);
+    }
+
+    public static void initialize() {
+
+    }
 }

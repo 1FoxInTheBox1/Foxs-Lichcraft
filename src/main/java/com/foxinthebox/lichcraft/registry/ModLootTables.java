@@ -21,4 +21,8 @@ public class ModLootTables {
     private static Identifier create(String name) {
         return Identifier.of(Lichcraft.MOD_ID, name);
     }
+
+    public static void initialize() {
+
+    }
 }

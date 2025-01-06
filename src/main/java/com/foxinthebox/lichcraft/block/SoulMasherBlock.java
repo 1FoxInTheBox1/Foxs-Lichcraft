@@ -1,7 +1,7 @@
 package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.Lichcraft;
-import com.foxinthebox.lichcraft.registry.ModDamageTypes;
+import com.foxinthebox.lichcraft.registry.ModTags;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
@@ -39,7 +39,7 @@ public class SoulMasherBlock extends FallingBlock {
 
     @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return ModDamageTypes.create(attacker.getWorld(), ModDamageTypes.LOW_SOUL_REAP, attacker);
+        return ModTags.createDamageSource(attacker.getWorld(), ModTags.LOW_SOUL_REAP, attacker);
     }
 
     @Override

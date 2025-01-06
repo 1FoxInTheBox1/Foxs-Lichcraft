@@ -1,8 +1,6 @@
 package com.foxinthebox.lichcraft;
 
-import com.foxinthebox.lichcraft.registry.ModBlocks;
-import com.foxinthebox.lichcraft.registry.ModDamageTypes;
-import com.foxinthebox.lichcraft.registry.ModItems;
+import com.foxinthebox.lichcraft.registry.*;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -18,7 +16,9 @@ public class Lichcraft implements ModInitializer {
 	public void onInitialize() {
 		ModItems.initialize();
 		ModBlocks.initialize();
-		ModDamageTypes.initialize();
+		ModTags.initialize();
+		ModLootTables.initialize();
+		ModStatusEffects.initialize();
 	}
 
 	public static Identifier getID(String id) {
