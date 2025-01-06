@@ -3,6 +3,7 @@ package com.foxinthebox.lichcraft.block;
 import com.foxinthebox.lichcraft.Lichcraft;
 import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModItems;
+import com.foxinthebox.lichcraft.registry.ModTags;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
@@ -72,7 +73,7 @@ public class PhylacteryBlock extends BlockWithEntity {
         setPlayerSpawn((ServerPlayerEntity)player, world, pos);
 
         if (!stack.isEmpty()) {
-            if (stack.isIn(ModItems.PHYLACTERY_FUEL)) {
+            if (stack.isIn(ModTags.PHYLACTERY_FUEL)) {
                 if (blockEntity.isEmpty()) {
                     blockEntity.setStack(0, player.getStackInHand(hand).copy());
                     stack.setCount(0);

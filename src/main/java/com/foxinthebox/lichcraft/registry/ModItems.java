@@ -24,17 +24,12 @@ import net.minecraft.world.event.GameEvent;
 public class ModItems {
     // Items
     public static final Item SOUL_GOO = register(new Item.Settings(), "soul_goo");
-    public static final Item SOUL_CRYSTAL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "soul_crystal");
+    public static final Item CHARGED_SOUL_CRYSTAL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "charged_soul_crystal");
+    public static final Item UNCHARGED_SOUL_CRYSTAL = register(new Item.Settings().rarity(Rarity.UNCOMMON), "uncharged_soul_crystal");
     public static final Item ECHOING_GOO = register(new Item.Settings().rarity(Rarity.UNCOMMON), "echoing_goo");
     public static final Item SOUL_STAR = register(new Item.Settings().rarity(Rarity.RARE), "soul_star");
     public static final Item RESONANT_SLAG = register(new Item.Settings().rarity(Rarity.EPIC), "resonant_slag");
     public static final Item DREAD_STEEL = register(new Item.Settings(), "dread_steel");
-
-    // Item Tags
-    public static final TagKey<Item> HIGH_POWER_SOUL = createTag("high_power_soul");
-    public static final TagKey<Item> MID_POWER_SOUL = createTag("mid_power_soul");
-    public static final TagKey<Item> LOW_POWER_SOUL = createTag("low_power_soul");
-    public static final TagKey<Item> PHYLACTERY_FUEL = createTag("phylactery_fuel");
 
     // Item Group
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(Lichcraft.MOD_ID, "item_group"));
@@ -56,7 +51,8 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY).register(itemGroup -> {
             itemGroup.add(SOUL_GOO);
-            itemGroup.add(SOUL_CRYSTAL);
+            itemGroup.add(CHARGED_SOUL_CRYSTAL);
+            itemGroup.add(UNCHARGED_SOUL_CRYSTAL);
             itemGroup.add(ECHOING_GOO);
             itemGroup.add(SOUL_STAR);
             itemGroup.add(RESONANT_SLAG);
@@ -82,9 +78,5 @@ public class ModItems {
                     }
                 }
         );
-    }
-
-    public static TagKey<Item> createTag(String name) {
-        return TagKey.of(RegistryKeys.ITEM, Lichcraft.getID(name));
     }
 }

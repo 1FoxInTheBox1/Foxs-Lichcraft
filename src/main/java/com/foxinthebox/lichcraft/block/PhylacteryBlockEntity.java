@@ -2,6 +2,7 @@ package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModItems;
+import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,13 +41,13 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
     public static void tick(World world, BlockPos pos, BlockState state, PhylacteryBlockEntity blockEntity) {
         if (!blockEntity.isEmpty()) {
             ItemStack stack = blockEntity.getStack(0);
-            if (stack.isIn(ModItems.PHYLACTERY_FUEL)) {
-                stack.setCount(stack.getCount() - 1);
-
-                int soulValue = stack.isIn(ModItems.LOW_POWER_SOUL) ? 1 : 0;
-                soulValue = stack.isIn(ModItems.MID_POWER_SOUL) ? 2 : soulValue;
-                soulValue = stack.isIn(ModItems.HIGH_POWER_SOUL) ? 100 : soulValue;
+            if (stack.isIn(ModTags.PHYLACTERY_FUEL)) {
+                int soulValue = stack.isIn(ModTags.LOW_POWER_SOUL) ? 1 : 0;
+                soulValue = stack.isIn(ModTags.MID_POWER_SOUL) ? 2 : soulValue;
+                soulValue = stack.isIn(ModTags.HIGH_POWER_SOUL) ? 100 : soulValue;
                 blockEntity.setSouls(blockEntity.getSouls() + soulValue);
+
+                stack.setCount(stack.getCount() - 1);
 
                 blockEntity.markDirty();
             }
@@ -101,7 +102,7 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public boolean isValid(int slot, ItemStack stack) {
-        return stack.isIn(ModItems.PHYLACTERY_FUEL);
+        return stack.isIn(ModTags.PHYLACTERY_FUEL);
     }
 
     @Override
