@@ -14,7 +14,7 @@ public class SoulReapEffect extends InstantStatusEffect {
     }
     @Override
     public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        entity.damage(world, ModTags.createDamageSource(world, ModTags.HIGH_SOUL_REAP, null), (float)(2 << amplifier));
+        entity.damage(world, ModTags.createDamageSource(world, ModTags.HIGH_SOUL_REAP, null), (float)(3 << amplifier));
 
         return true;
     }
@@ -22,7 +22,7 @@ public class SoulReapEffect extends InstantStatusEffect {
 
     @Override
     public void applyInstantEffect(ServerWorld world, @Nullable Entity effectEntity, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
-        int i = (int)(proximity * (double)(6 << amplifier) + 0.5);
+        int i = (int)(proximity * (double)(3 << amplifier) + 0.5);
         if (effectEntity != null) {
             target.damage(world, ModTags.createDamageSource(target.getWorld(), ModTags.HIGH_SOUL_REAP, attacker), i);
         } else {

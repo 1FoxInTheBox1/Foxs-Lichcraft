@@ -3,11 +3,13 @@ package com.foxinthebox.lichcraft.registry;
 import com.foxinthebox.lichcraft.Lichcraft;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -30,6 +32,10 @@ public class ModItems {
     public static final Item SOUL_STAR = register(new Item.Settings().rarity(Rarity.RARE), "soul_star");
     public static final Item RESONANT_SLAG = register(new Item.Settings().rarity(Rarity.EPIC), "resonant_slag");
     public static final Item DREAD_STEEL = register(new Item.Settings(), "dread_steel");
+    public static final Potion SOUL_REAP_POTION_WEAK = Registry.register(Registries.POTION, Lichcraft.getID("soul_reap_weak"),
+                                                    new Potion("soul_reap", new StatusEffectInstance(ModStatusEffects.SOUL_REAP, 1, 0)));
+    public static final Potion SOUL_REAP_POTION_STRONG = Registry.register(Registries.POTION, Lichcraft.getID("soul_reap_strong"),
+                                                    new Potion("soul_reap", new StatusEffectInstance(ModStatusEffects.SOUL_REAP, 1, 1)));
 
     // Item Group
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(Lichcraft.MOD_ID, "item_group"));
@@ -46,6 +52,30 @@ public class ModItems {
         return Registry.register(Registries.ITEM, itemID, new Item(settings));
     }
 
+    public static void registerModPotionRecipes() {
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            builder.registerPotionRecipe(
+                    // Input potion.
+                    Potions.AWKWARD,
+                    // Ingredient
+                    CHARGED_SOUL_CRYSTAL,
+                    // Output potion.
+                    Registries.POTION.getEntry(SOUL_REAP_POTION_WEAK)
+            );
+        });
+
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            builder.registerPotionRecipe(
+                    // Input potion.
+                    Registries.POTION.getEntry(SOUL_REAP_POTION_WEAK),
+                    // Ingredient
+                    Items.SCULK_CATALYST,
+                    // Output potion.
+                    Registries.POTION.getEntry(SOUL_REAP_POTION_STRONG)
+            );
+        });
+    }
+
     public static void initialize() {
         Registry.register(Registries.ITEM_GROUP, ITEM_GROUP_KEY, ITEM_GROUP);
 
@@ -59,24 +89,6 @@ public class ModItems {
             itemGroup.add(DREAD_STEEL);
         });
 
-        DispenserBlock.registerBehavior(ModBlocks.SOUL_MASHER_BLOCK.asItem(),
-                new FallibleItemDispenserBehavior() {
-                    @Override
-                    public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-                        ServerWorld serverWorld = pointer.world();
-                        BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
-                        if (serverWorld.isAir(blockPos)) {
-                            serverWorld.setBlockState(blockPos, ModBlocks.SOUL_MASHER_BLOCK.getDefaultState());
-                            serverWorld.emitGameEvent(null, GameEvent.BLOCK_PLACE, blockPos);
-                        }
-
-                        if (this.isSuccess()) {
-                            stack.decrement(1);
-                        }
-
-                        return stack;
-                    }
-                }
-        );
+        registerModPotionRecipes();
     }
 }

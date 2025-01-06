@@ -8,14 +8,21 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.event.GameEvent;
 
 public class ModBlocks {
 
@@ -62,5 +69,25 @@ public class ModBlocks {
             itemGroup.add(ModBlocks.SOUL_MASHER_BLOCK.asItem());
             itemGroup.add(ModBlocks.PHYLACTERY_BLOCK.asItem());
         });
+
+        DispenserBlock.registerBehavior(ModBlocks.SOUL_MASHER_BLOCK.asItem(),
+                new FallibleItemDispenserBehavior() {
+                    @Override
+                    public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+                        ServerWorld serverWorld = pointer.world();
+                        BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
+                        if (serverWorld.isAir(blockPos)) {
+                            serverWorld.setBlockState(blockPos, ModBlocks.SOUL_MASHER_BLOCK.getDefaultState());
+                            serverWorld.emitGameEvent(null, GameEvent.BLOCK_PLACE, blockPos);
+                        }
+
+                        if (this.isSuccess()) {
+                            stack.decrement(1);
+                        }
+
+                        return stack;
+                    }
+                }
+        );
     }
 }
