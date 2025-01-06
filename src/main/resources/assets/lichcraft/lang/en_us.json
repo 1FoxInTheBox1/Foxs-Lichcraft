@@ -1,4 +1,27 @@
 {
   "itemGroup.lichcraft": "Lichcraft",
-  "item.lichcraft.soul_goo": "Soul Goo"
+  "item.lichcraft.soul_goo": "Soul Goo",
+  "item.lichcraft.echoing_goo": "Echoing Goo",
+  "item.lichcraft.uncharged_soul_crystal": "Uncharged Soul Crystal",
+  "item.lichcraft.charged_soul_crystal": "Charged Soul Crystal",
+  "item.lichcraft.soul_star": "Soul Star",
+  "item.lichcraft.resonant_slag": "Resonant Slag",
+  "item.lichcraft.dread_steel": "Dread Steel",
+
+  "tag.item.lichcraft.high_power_soul": "High Power Soul",
+  "tag.item.lichcraft.mid_power_soul": "Medium Power Soul",
+  "tag.item.lichcraft.low_power_soul": "Low Power Soul",
+  "tag.item.lichcraft.phylactery_fuel": "Phylactery Fuel",
+
+  "block.lichcraft.phylactery": "Phylactery",
+  "block.lichcraft.soul_masher": "Soul Masher",
+
+  "effect.lichcraft.soul_reap": "Soul Reap",
+  "item.minecraft.potion.effect.soul_reap": "Potion of Reaping",
+  "item.minecraft.splash_potion.effect.soul_reap": "Splash Potion of Reaping",
+  "item.minecraft.lingering_potion.effect.soul_reap": "Lingering Potion of Reaping",
+
+  "death.attack.soul_reap": "%s's soul was reaped",
+  "death.attack.soul_reap.item": "%s's soul was reaped by %s using %s",
+  "death.attack.soul_reap.player": "%s's soul was reaped by %s"
 }
