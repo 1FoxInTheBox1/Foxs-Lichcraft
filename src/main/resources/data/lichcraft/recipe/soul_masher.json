@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    " C ",
+    "DDD"
+  ],
+  "key": {
+    "S": "minecraft:sculk",
+    "C": "minecraft:sculk_catalyst",
+    "D": "lichcraft:dread_steel"
+  },
+  "result": {
+    "id": "lichcraft:soul_masher"
+  }
+}

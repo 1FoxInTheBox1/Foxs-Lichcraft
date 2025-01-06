@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "SGS",
+    " S "
+  ],
+  "key": {
+    "S": [
+      "minecraft:sculk"
+    ],
+    "G": [
+      "lichcraft:soul_goo"
+    ]
+  },
+  "result": {
+    "id": "lichcraft:echoing_goo"
+  }
+}

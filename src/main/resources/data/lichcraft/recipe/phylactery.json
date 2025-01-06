@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SCS",
+    "DRD",
+    "SCS"
+  ],
+  "key": {
+    "S": [
+      "minecraft:soul_sand",
+      "minecraft:soul_soil"
+    ],
+    "C": "minecraft:sculk_catalyst",
+    "D": "lichcraft:dread_steel",
+    "R": "lichcraft:resonant_slag"
+  },
+  "result": {
+    "id": "lichcraft:phylactery"
+  }
+}

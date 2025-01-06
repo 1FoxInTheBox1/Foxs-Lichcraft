@@ -55,22 +55,16 @@ public class ModItems {
     public static void registerModPotionRecipes() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(
-                    // Input potion.
                     Potions.AWKWARD,
-                    // Ingredient
                     CHARGED_SOUL_CRYSTAL,
-                    // Output potion.
                     Registries.POTION.getEntry(SOUL_REAP_POTION_WEAK)
             );
         });
 
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(
-                    // Input potion.
                     Registries.POTION.getEntry(SOUL_REAP_POTION_WEAK),
-                    // Ingredient
                     Items.SCULK_CATALYST,
-                    // Output potion.
                     Registries.POTION.getEntry(SOUL_REAP_POTION_STRONG)
             );
         });

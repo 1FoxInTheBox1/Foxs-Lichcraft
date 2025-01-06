@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "lichcraft:dread_steel",
+    "lichcraft:dread_steel",
+    "lichcraft:echoing_goo",
+    "lichcraft:echoing_goo",
+    "minecraft:echo_shard",
+    "minecraft:echo_shard",
+    "minecraft:echo_shard",
+    "minecraft:echo_shard"
+  ],
+  "result": {
+    "id": "lichcraft:resonant_slag"
+  }
+}

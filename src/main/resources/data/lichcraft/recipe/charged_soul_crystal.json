@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": "lichcraft:uncharged_soul_crystal",
+  "result": {
+    "id": "lichcraft:charged_soul_crystal"
+  },
+  "experience": 0.5
+}

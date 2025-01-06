@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:sculk",
+    "minecraft:gold_ingot",
+    [
+      "minecraft:soul_sand",
+      "minecraft:soul_soil"
+    ],
+    [
+      "minecraft:soul_sand",
+      "minecraft:soul_soil"
+    ]
+  ],
+  "result": {
+    "id": "lichcraft:dread_steel"
+  }
+}
