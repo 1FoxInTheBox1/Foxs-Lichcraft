@@ -5,12 +5,15 @@ import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,20 +25,23 @@ import java.util.Optional;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-	@Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
-
-	@Shadow public abstract void damageShield(float amount);
-
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	private void onDeath(DamageSource damageSource, CallbackInfo ci) {
+		for (PlayerEntity player : ((LivingEntity) (Object) this).getWorld().getPlayers()) {
+			player.sendMessage(Text.literal("dead"), false);
+		}
+
 		if (damageSource.isOf(ModTags.LOW_SOUL_REAP) || damageSource.isOf(ModTags.HIGH_SOUL_REAP)) {
 			dropSouls((ServerWorld) ((LivingEntity) (Object) this).getWorld(), damageSource);
 		}
 	}
 
 	@Unique
-	protected void dropSouls(ServerWorld world, DamageSource damageSource) {
+	public void dropSouls(ServerWorld world, DamageSource damageSource) {
 		Optional<RegistryKey<LootTable>> optional = getSoulLootTable(damageSource);
+		for (PlayerEntity player : ((LivingEntity) (Object) this).getWorld().getPlayers()) {
+			player.sendMessage(Text.literal("reap"), false);
+		}
 
 		if (!optional.isEmpty()) {
 			LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable((RegistryKey<LootTable>)optional.get());
@@ -56,7 +62,7 @@ public abstract class LivingEntityMixin {
 	protected Optional<RegistryKey<LootTable>> getSoulLootTable(DamageSource damageSource) {
 		if (damageSource.isOf(ModTags.LOW_SOUL_REAP)) {
 			if (((Entity) (Object) this).getType().isIn(ModTags.EXTREME_SOUL_YIELD)) {
-				return Optional.of(ModLootTables.HIGH_YIELD_LOW_REAP);
+				return Optional.of(ModLootTables.EXTREME_YIELD_LOW_REAP);
 			}
 			if (((Entity) (Object) this).getType().isIn(ModTags.HIGH_SOUL_YIELD)) {
 				return Optional.of(ModLootTables.HIGH_YIELD_LOW_REAP);
@@ -70,7 +76,7 @@ public abstract class LivingEntityMixin {
 		}
 		if (damageSource.isOf(ModTags.HIGH_SOUL_REAP)) {
 			if (((Entity) (Object) this).getType().isIn(ModTags.EXTREME_SOUL_YIELD)) {
-				return Optional.of(ModLootTables.HIGH_YIELD_HIGH_REAP);
+				return Optional.of(ModLootTables.EXTREME_YIELD_HIGH_REAP);
 			}
 			if (((Entity) (Object) this).getType().isIn(ModTags.HIGH_SOUL_YIELD)) {
 				return Optional.of(ModLootTables.HIGH_YIELD_HIGH_REAP);

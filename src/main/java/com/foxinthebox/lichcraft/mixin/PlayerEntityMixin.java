@@ -2,16 +2,19 @@ package com.foxinthebox.lichcraft.mixin;
 
 import com.foxinthebox.lichcraft.block.PhylacteryBlock;
 import com.foxinthebox.lichcraft.block.PhylacteryBlockEntity;
+import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
@@ -23,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
+public class PlayerEntityMixin extends LivingEntityMixin {
     @Inject(at = @At("RETURN"), method="applyDamage(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;F)V")
     protected void onDamage(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
         if (((PlayerEntity) (Object) this).getHealth() <= 0 && !source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -45,7 +48,6 @@ public class PlayerEntityMixin {
                         }
                         phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - 1000);
                         phylacteryBlockEntity.markDirty();
-                        return;
                     }
                 }
             }
