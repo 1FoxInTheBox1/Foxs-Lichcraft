@@ -39,7 +39,7 @@ public class SoulMasherBlock extends FallingBlock {
 
     @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return ModDamageTypes.create(attacker.getWorld(), ModDamageTypes.LOW_SOUL_REND, attacker);
+        return ModDamageTypes.create(attacker.getWorld(), ModDamageTypes.LOW_SOUL_REAP, attacker);
     }
 
     @Override
