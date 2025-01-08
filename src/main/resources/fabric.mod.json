@@ -8,8 +8,7 @@
 		"FoxInTheBox"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/1FoxInTheBox1/Foxs-Lichcraft"
 	},
 	"license": "MIT",
 	"icon": "assets/lichcraft/icon.png",
