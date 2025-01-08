@@ -27,10 +27,6 @@ import java.util.Optional;
 public abstract class LivingEntityMixin {
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	private void onDeath(DamageSource damageSource, CallbackInfo ci) {
-		for (PlayerEntity player : ((LivingEntity) (Object) this).getWorld().getPlayers()) {
-			player.sendMessage(Text.literal("dead"), false);
-		}
-
 		if (damageSource.isOf(ModTags.LOW_SOUL_REAP) || damageSource.isOf(ModTags.HIGH_SOUL_REAP)) {
 			dropSouls((ServerWorld) ((LivingEntity) (Object) this).getWorld(), damageSource);
 		}
@@ -39,9 +35,6 @@ public abstract class LivingEntityMixin {
 	@Unique
 	public void dropSouls(ServerWorld world, DamageSource damageSource) {
 		Optional<RegistryKey<LootTable>> optional = getSoulLootTable(damageSource);
-		for (PlayerEntity player : ((LivingEntity) (Object) this).getWorld().getPlayers()) {
-			player.sendMessage(Text.literal("reap"), false);
-		}
 
 		if (!optional.isEmpty()) {
 			LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable((RegistryKey<LootTable>)optional.get());

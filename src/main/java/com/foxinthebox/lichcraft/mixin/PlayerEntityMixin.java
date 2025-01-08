@@ -35,7 +35,7 @@ public class PlayerEntityMixin extends LivingEntityMixin {
                 ServerWorld respawnWorld = ((ServerPlayerEntity) (Object) this).server.getWorld(((ServerPlayerEntity) (Object) this).getSpawnPointDimension());
                 BlockState blockState = respawnWorld.getBlockState(respawnPos);
                 Block block = blockState.getBlock();
-                BlockEntity blockEntity = world.getBlockEntity(respawnPos);
+                BlockEntity blockEntity = respawnWorld.getBlockEntity(respawnPos);
 
                 if (block instanceof PhylacteryBlock && blockEntity instanceof PhylacteryBlockEntity phylacteryBlockEntity) {
                     if (phylacteryBlockEntity.getSouls() >= 1000) {
