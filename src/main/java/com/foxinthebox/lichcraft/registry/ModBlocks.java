@@ -27,8 +27,8 @@ import net.minecraft.world.event.GameEvent;
 public class ModBlocks {
 
     // Blocks
-    public static final Block SOUL_MASHER_BLOCK = registerBlock(new SoulMasherBlock(AbstractBlock.Settings.create()), SoulMasherBlock.ID, true);
-    public static final Block PHYLACTERY_BLOCK = registerBlock(new PhylacteryBlock(AbstractBlock.Settings.create()), PhylacteryBlock.ID, true);
+    public static final Block SOUL_MASHER_BLOCK = registerBlock(new SoulMasherBlock(AbstractBlock.Settings.create().strength(1)), SoulMasherBlock.ID, true);
+    public static final Block PHYLACTERY_BLOCK = registerBlock(new PhylacteryBlock(AbstractBlock.Settings.create().strength(4).nonOpaque()), PhylacteryBlock.ID, true);
 
     // Block Entities
     public static final BlockEntityType<PhylacteryBlockEntity> PHYLACTERY_BLOCK_ENTITY = registerBlockEntity("phylactery", FabricBlockEntityTypeBuilder.create(PhylacteryBlockEntity::new, PHYLACTERY_BLOCK).build());
