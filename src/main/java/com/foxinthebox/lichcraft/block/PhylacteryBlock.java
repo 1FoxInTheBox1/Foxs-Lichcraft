@@ -6,9 +6,7 @@ import com.foxinthebox.lichcraft.registry.ModItems;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -24,11 +22,17 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.stream.Stream;
 
 public class PhylacteryBlock extends BlockWithEntity {
     public static final Identifier ID = Lichcraft.getID("phylactery");
@@ -50,6 +54,13 @@ public class PhylacteryBlock extends BlockWithEntity {
             .add(new Vec3i(0, 1, 0))
             .build();
 
+    private static final VoxelShape SHAPE = Stream.of(
+            Block.createCuboidShape(5, 0, 5, 11, 6, 11),
+            Block.createCuboidShape(6, 6, 6, 10, 7, 10),
+            Block.createCuboidShape(5, 7, 5, 11, 8, 11),
+            Block.createCuboidShape(6, 8, 6, 10, 9, 10)
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+
     public PhylacteryBlock(Settings settings) {
         super(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, ID))
                 .sounds(BlockSoundGroup.SCULK_SHRIEKER));
@@ -67,8 +78,6 @@ public class PhylacteryBlock extends BlockWithEntity {
         if (!(world.getBlockEntity(pos) instanceof PhylacteryBlockEntity blockEntity)) {
             return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
         }
-
-        player.sendMessage(Text.literal("Souls: " + blockEntity.getSouls()), false);
 
         setPlayerSpawn((ServerPlayerEntity)player, world, pos);
 
@@ -116,8 +125,23 @@ public class PhylacteryBlock extends BlockWithEntity {
     }
 
     @Override
+    protected boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return super.getComparatorOutput(state, world, pos);
+    }
+
+    @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PhylacteryBlockEntity(pos, state);
+    }
+
+    @Override
+    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
 
     @Override
