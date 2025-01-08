@@ -1,7 +1,6 @@
 package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.registry.ModBlocks;
-import com.foxinthebox.lichcraft.registry.ModItems;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

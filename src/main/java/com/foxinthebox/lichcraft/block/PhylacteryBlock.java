@@ -2,7 +2,6 @@ package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.Lichcraft;
 import com.foxinthebox.lichcraft.registry.ModBlocks;
-import com.foxinthebox.lichcraft.registry.ModItems;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
@@ -18,7 +17,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
