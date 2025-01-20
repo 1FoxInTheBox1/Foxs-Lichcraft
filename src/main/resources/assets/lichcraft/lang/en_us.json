@@ -23,5 +23,18 @@
 
   "death.attack.soul_reap": "%s's soul was reaped",
   "death.attack.soul_reap.item": "%s's soul was reaped by %s using %s",
-  "death.attack.soul_reap.player": "%s's soul was reaped by %s"
+  "death.attack.soul_reap.player": "%s's soul was reaped by %s",
+
+  "lichcraft.midnightconfig.title": "Fox's Lichcraft Config",
+  "lichcraft.midnightconfig.notice": "Soul loot tables and tags are defined are data-driven.\nUse datapacks to modify this data.",
+  "lichcraft.midnightconfig.low_power_soul_value": "Low Power Soul Value",
+  "lichcraft.midnightconfig.low_power_soul_value.tooltip": "The number of souls added to a phylactery by low power fuels",
+  "lichcraft.midnightconfig.mid_power_soul_value": "Mid Power Soul Value",
+  "lichcraft.midnightconfig.mid_power_soul_value.tooltip": "The number of souls added to a phylactery by mid power fuels",
+  "lichcraft.midnightconfig.high_power_soul_value": "High Power Soul Value",
+  "lichcraft.midnightconfig.high_power_soul_value.tooltip": "The number of souls added to a phylactery by high power fuels",
+  "lichcraft.midnightconfig.revive_cost": "Revive Cost",
+  "lichcraft.midnightconfig.revive_cost.tooltip": "The number of souls a phylactery must contain to allow a player to be automatically revived there",
+  "lichcraft.midnightconfig.max_phylactery_souls": "Max Phylactery Souls",
+  "lichcraft.midnightconfig.max_phylactery_souls.tooltip": "The max number of souls a phylactery can contain"
 }

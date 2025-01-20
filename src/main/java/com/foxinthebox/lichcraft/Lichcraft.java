@@ -1,6 +1,7 @@
 package com.foxinthebox.lichcraft;
 
 import com.foxinthebox.lichcraft.registry.*;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -19,6 +20,7 @@ public class Lichcraft implements ModInitializer {
 		ModTags.initialize();
 		ModLootTables.initialize();
 		ModStatusEffects.initialize();
+		MidnightConfig.init(MOD_ID, LichcraftConfig.class);
 	}
 
 	public static Identifier getID(String id) {

@@ -35,6 +35,6 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"modmenu": ">=13.0.0"
 	}
 }

@@ -1,5 +1,6 @@
 package com.foxinthebox.lichcraft.mixin;
 
+import com.foxinthebox.lichcraft.LichcraftConfig;
 import com.foxinthebox.lichcraft.block.PhylacteryBlock;
 import com.foxinthebox.lichcraft.block.PhylacteryBlockEntity;
 import net.minecraft.block.Block;
@@ -35,7 +36,7 @@ public class PlayerEntityMixin extends LivingEntityMixin {
                 BlockEntity blockEntity = respawnWorld.getBlockEntity(respawnPos);
 
                 if (block instanceof PhylacteryBlock && blockEntity instanceof PhylacteryBlockEntity phylacteryBlockEntity) {
-                    if (phylacteryBlockEntity.getSouls() >= 1000) {
+                    if (phylacteryBlockEntity.getSouls() >= LichcraftConfig.revive_cost) {
                         Optional<Vec3d> optional = RespawnAnchorBlock.findRespawnPosition(EntityType.PLAYER, respawnWorld, respawnPos);
                         if (optional.isPresent()) {
                             ((PlayerEntity) (Object) this).setHealth(5.0f);
@@ -43,7 +44,7 @@ public class PlayerEntityMixin extends LivingEntityMixin {
                             TeleportTarget teleportTarget = new TeleportTarget(respawnWorld, optional.get(), Vec3d.ZERO, ((ServerPlayerEntity) (Object) this).getYaw(), 0.0F, TeleportTarget.ADD_PORTAL_CHUNK_TICKET);
                             ((PlayerEntity) (Object) this).teleportTo(teleportTarget);
                         }
-                        phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - 1000);
+                        phylacteryBlockEntity.setSouls(phylacteryBlockEntity.getSouls() - LichcraftConfig.revive_cost);
                         phylacteryBlockEntity.markDirty();
                     }
                 }

@@ -1,5 +1,6 @@
 package com.foxinthebox.lichcraft.block;
 
+import com.foxinthebox.lichcraft.LichcraftConfig;
 import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import net.minecraft.block.BlockState;
@@ -15,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
-    public static final int MAX_SOULS = 5000;
     private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private int souls = 0;
 
@@ -41,9 +41,9 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
         if (!blockEntity.isEmpty()) {
             ItemStack stack = blockEntity.getStack(0);
             if (stack.isIn(ModTags.PHYLACTERY_FUEL)) {
-                int soulValue = stack.isIn(ModTags.LOW_POWER_SOUL) ? 1 : 0;
-                soulValue = stack.isIn(ModTags.MID_POWER_SOUL) ? 2 : soulValue;
-                soulValue = stack.isIn(ModTags.HIGH_POWER_SOUL) ? 100 : soulValue;
+                int soulValue = stack.isIn(ModTags.LOW_POWER_SOUL) ? LichcraftConfig.low_power_soul_value : 0;
+                soulValue = stack.isIn(ModTags.MID_POWER_SOUL) ? LichcraftConfig.mid_power_soul_value : soulValue;
+                soulValue = stack.isIn(ModTags.HIGH_POWER_SOUL) ? LichcraftConfig.high_power_soul_value : soulValue;
                 blockEntity.setSouls(blockEntity.getSouls() + soulValue);
 
                 stack.setCount(stack.getCount() - 1);
@@ -58,7 +58,7 @@ public class PhylacteryBlockEntity extends BlockEntity implements Inventory {
     }
 
     public void setSouls(int amount) {
-        souls = Math.clamp(amount, 0, MAX_SOULS);
+        souls = Math.clamp(amount, 0, LichcraftConfig.max_phylactery_souls);
         markDirty();
     }
 
