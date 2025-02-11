@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lichcraft:block/soul_masher",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "lichcraft:block/soul_masher",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "lichcraft:block/soul_masher"
+    },
+    "facing=west": {
+      "model": "lichcraft:block/soul_masher",
+      "y": 90
+    }
+  }
+}
