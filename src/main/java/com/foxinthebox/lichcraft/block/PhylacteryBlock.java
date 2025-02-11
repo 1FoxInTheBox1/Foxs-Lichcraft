@@ -1,6 +1,7 @@
 package com.foxinthebox.lichcraft.block;
 
 import com.foxinthebox.lichcraft.Lichcraft;
+import com.foxinthebox.lichcraft.LichcraftConfig;
 import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModTags;
 import com.google.common.collect.ImmutableList;
@@ -130,7 +131,13 @@ public class PhylacteryBlock extends BlockWithEntity {
 
     @Override
     protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return super.getComparatorOutput(state, world, pos);
+        if (!(world.getBlockEntity(pos) instanceof PhylacteryBlockEntity blockEntity)) {
+            return 0;
+        }
+
+        float fillPercentage = (float) blockEntity.getSouls() / LichcraftConfig.max_phylactery_souls;
+
+        return (int) (15 * fillPercentage);
     }
 
     @Override
