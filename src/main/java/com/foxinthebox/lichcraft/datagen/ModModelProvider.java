@@ -1,5 +1,6 @@
 package com.foxinthebox.lichcraft.datagen;
 
+import com.foxinthebox.lichcraft.registry.ModBlocks;
 import com.foxinthebox.lichcraft.registry.ModItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -14,7 +15,8 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PHYLACTERY_BLOCK);
+        blockStateModelGenerator.registerAnvil(ModBlocks.SOUL_MASHER_BLOCK);
     }
 
     @Override
@@ -26,5 +28,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.ECHOING_GOO, Models.GENERATED);
         itemModelGenerator.register(ModItems.DREAD_STEEL, Models.GENERATED);
         itemModelGenerator.register(ModItems.RESONANT_SLAG, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BOOK_OF_SOULS, Models.GENERATED);
     }
 }

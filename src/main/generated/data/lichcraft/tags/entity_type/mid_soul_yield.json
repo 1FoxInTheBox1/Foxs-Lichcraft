@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:allay",
+    "minecraft:villager",
+    "minecraft:piglin",
+    "minecraft:piglin_brute",
+    "minecraft:pillager",
+    "minecraft:vindicator",
+    "minecraft:enderman",
+    "minecraft:ghast",
+    "minecraft:ravager"
+  ]
+}

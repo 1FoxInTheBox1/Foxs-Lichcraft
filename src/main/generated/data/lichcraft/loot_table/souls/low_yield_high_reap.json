@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lichcraft:soul_goo",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "lichcraft:uncharged_soul_crystal"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 2
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 3.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

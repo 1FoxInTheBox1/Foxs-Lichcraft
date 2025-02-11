@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lichcraft:soul_star"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lichcraft:uncharged_soul_crystal"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 25.0,
+        "min": 10.0
+      }
+    }
+  ]
+}

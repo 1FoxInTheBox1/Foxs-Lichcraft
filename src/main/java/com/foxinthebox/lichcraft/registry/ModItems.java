@@ -1,6 +1,7 @@
 package com.foxinthebox.lichcraft.registry;
 
 import com.foxinthebox.lichcraft.Lichcraft;
+import io.wispforest.lavender.book.LavenderBookItem;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
@@ -29,6 +30,7 @@ public class ModItems {
                                                     new Potion("soul_reap", new StatusEffectInstance(ModStatusEffects.SOUL_REAP, 1, 0)));
     public static final Potion SOUL_REAP_POTION_STRONG = Registry.register(Registries.POTION, Lichcraft.getID("soul_reap_strong"),
                                                     new Potion("soul_reap", new StatusEffectInstance(ModStatusEffects.SOUL_REAP, 1, 1)));
+    public static final Item BOOK_OF_SOULS = LavenderBookItem.registerForBook(Lichcraft.getID("book_of_souls"), new Item.Settings().maxCount(1));
 
     // Item Group
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(Lichcraft.MOD_ID, "item_group"));
@@ -74,6 +76,7 @@ public class ModItems {
             itemGroup.add(SOUL_STAR);
             itemGroup.add(RESONANT_SLAG);
             itemGroup.add(DREAD_STEEL);
+            itemGroup.add(BOOK_OF_SOULS);
         });
 
         registerModPotionRecipes();
