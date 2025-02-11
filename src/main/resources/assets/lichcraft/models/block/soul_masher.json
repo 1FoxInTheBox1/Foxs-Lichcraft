@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_anvil",
+  "textures": {
+    "top": "lichcraft:block/soul_masher_top",
+    "body": "lichcraft:block/soul_masher_body"
+  }
+}
